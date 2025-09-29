@@ -1,0 +1,42 @@
+{
+  "name": "my-nodejs-project",
+  "version": "1.0.0",
+  "description": "A Node.js project using Typegoose, Express, and Nodemon",
+  "main": "src/app.ts",
+  "scripts": {
+    "start": "nodemon src/app.ts"
+  },
+  "events": {
+    "restart": "kill-port 3000",
+    "crash": "kill-port 3000"
+  },
+  "delay": "1500",
+  "dependencies": {
+    "@typegoose/typegoose": "^12.14.0",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^2.6.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.18",
+    "dotenv": "^16.5.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "multer": "^1.4.5-lts.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.8",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^14.14.31",
+    "kill-port": "^2.0.1",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  },
+  "author": "",
+  "license": "ISC"
+}

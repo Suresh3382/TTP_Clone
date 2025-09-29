@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #F3F4FA;
+  font-family: 'Poppins', sans-serif;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-popover-placement-bottomRight>.ant-popover-arrow {
+  margin-top: 10px;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-popover .ant-popover-inner {
+  margin-top: 10px;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-popover .ant-popover-inner {
+  padding: 6px;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-name {
+  display: none;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error .ant-upload-list-item-actions .ant-upload-list-item-action {
+  display: none;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-upload-wrapper .ant-upload-list .ant-upload-list-item-error {
+  display: none;
+}
+
+.ant-table-thead {
+  font-family: 'Poppins';
+  font-size: small;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-table-wrapper .ant-table-thead>tr>th {
+  border: hidden;
+  background-color: #E9ECF1;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-table-wrapper .ant-table-tbody>tr>td {
+  font-family: 'Poppins';
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-skeleton.ant-skeleton-active .ant-skeleton-paragraph>li {
+  height: 50px;
+  margin-block-start: 0px;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-skeleton .ant-skeleton-content .ant-skeleton-paragraph>li+li {
+  margin-block-start: 5px;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
+  font-family: 'Poppins';
+  font-size: small;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse>.ant-collapse-item:first-child>.ant-collapse-header {
+  padding: 12px 16px 6px 16px;
+  margin: 0;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse>.ant-collapse-item:last-child>.ant-collapse-header {
+  padding: 12px 16px 6px 16px;
+  margin: 0;
+}
+
+.my-table-styling2 .ant-table-cell {
+  font-family: 'Poppins', sans-serif;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content {
+  font-family: 'Poppins';
+  font-size: small;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
+  padding: 2px 16px;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse>.ant-collapse-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+:where(.css-dev-only-do-not-override-1a3rktk).ant-collapse .ant-collapse-item:last-child {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-collapse>.ant-collapse-item:first-child>.ant-collapse-header {
+  padding: 20px 5px 3px 0;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
+  padding: 0 16px;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-collapse>.ant-collapse-item:last-child>.ant-collapse-header {
+  padding: 3px 5px 3px 0;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-modal .ant-modal-content {
+  border-radius: 3px;
+}
+
+.my-table-styling .ant-table-tbody>tr>td {
+  padding: 6px;
+  font-family: 'Poppins';
+}
+
+.custom-red-hover:hover {
+  background-color: #ffdede !important;
+  color: red !important;
+  border: none !important;
+}
+
+.my-first-datepicker .ant-picker-input>input {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-table-wrapper .ant-table-thead>tr>th,
+:where(.css-dev-only-do-not-override-1rfzxih).ant-table-wrapper .ant-table-thead>tr>td {
+  background-color: #F0F3F8;
+  font-weight: 600;
+}
+
+.my-table-styling.ant-table-wrapper .ant-table-thead>tr>th,
+.my-table-styling.ant-table-wrapper .ant-table-thead>tr>td {
+  padding: 10px 5px;
+  background-color: #F0F3F8;
+  font-weight: 600;
+  font-family: 'Poppins';
+}
+
+.my-table-styling2.ant-table-wrapper .ant-table-tbody>tr>td {
+  padding: 12px;
+}
+
+.my-table-styling2.ant-table-wrapper .ant-table-thead>tr>th,
+.my-table-styling2.ant-table-wrapper .ant-table-thead>tr>td {
+  padding: 10px 12px;
+  background-color: #F0F3F8;
+  font-weight: 600;
+  font-family: 'Poppins';
+}
+
+.my-first-datepicker.ant-picker {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.my-first-datepicker.ant-picker-focused {
+  box-shadow: none !important;
+}
+
+.my-first-datepicker input {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.my-table-styling3.ant-table-wrapper .ant-table-thead>tr>th,
+.my-table-styling3.ant-table-wrapper .ant-table-thead>tr>td {
+  padding: 10px;
+  background-color: #F0F3F8;
+  font-weight: 600;
+  font-family: 'Poppins';
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-input-affix-wrapper {
+  border-radius: 3px;
+}
+
+.clean-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.clean-scrollbar::-webkit-scrollbar {
+  padding-top: 12px;
+  height: 6px;
+}
+
+.clean-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.clean-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 8px;
+}
+
+.custom-textarea.ant-input {
+  border-radius: 5px;
+  height: 20px;
+}
+
+.today-row {
+  background-color: #F3F9FF;
+}
+
+.FontChange {
+  font: 'Poppins'
+}
+
+.ant-input,
+.ant-select-selector,
+.ant-picker-input,
+.ant-time-picker-input,
+.ant-range-picker-input,
+.ant-input-number-input {
+  border-radius: 3px !important;
+  font-family: 'poppins';
+}
+
+.ant-select,
+.ant-picker,
+.ant-time-picker,
+.ant-range-picker,
+.ant-input-number {
+  border-radius: 3px !important;
+  font-family: 'poppins';
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
+  font-family: 'poppins';
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih)[class^="ant-checkbox"] [class^="ant-checkbox"] {
+  font-family: 'poppins';
+}
+
+.custom-skeleton .ant-skeleton-content .ant-skeleton-paragraph>li {
+  height: 35px !important;
+  margin-top: 2px !important;
+  margin-bottom: 11px !important;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-menu-dark .ant-menu-item {
+  height: 50px;
+  margin: 2px;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih)[class^="ant-menu"] [class^="ant-menu"],
+:where(.css-dev-only-do-not-override-1rfzxih)[class*=" ant-menu"] [class^="ant-menu"] {
+  cursor: pointer;
+}
