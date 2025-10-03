@@ -9,7 +9,7 @@
 
 body {
   background-color: #F3F4FA;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 input:focus,
@@ -42,7 +42,7 @@ select:focus {
 }
 
 .ant-table-thead {
-  font-family: 'Poppins';
+  font-family: 'Outfit';
   font-size: small;
 }
 
@@ -52,7 +52,7 @@ select:focus {
 }
 
 :where(.css-dev-only-do-not-override-1a3rktk).ant-table-wrapper .ant-table-tbody>tr>td {
-  font-family: 'Poppins';
+  font-family: 'Outfit';
 }
 
 :where(.css-dev-only-do-not-override-1a3rktk).ant-skeleton.ant-skeleton-active .ant-skeleton-paragraph>li {
@@ -65,7 +65,7 @@ select:focus {
 }
 
 :where(.css-dev-only-do-not-override-1a3rktk).ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
-  font-family: 'Poppins';
+  font-family: 'Outfit';
   font-size: small;
 }
 
@@ -80,11 +80,11 @@ select:focus {
 }
 
 .my-table-styling2 .ant-table-cell {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 :where(.css-dev-only-do-not-override-1a3rktk).ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content {
-  font-family: 'Poppins';
+  font-family: 'Outfit';
   font-size: small;
 }
 
@@ -122,7 +122,7 @@ select:focus {
 
 .my-table-styling .ant-table-tbody>tr>td {
   padding: 6px;
-  font-family: 'Poppins';
+  font-family: 'Outfit';
 }
 
 .custom-red-hover:hover {
@@ -147,7 +147,7 @@ select:focus {
   padding: 10px 5px;
   background-color: #F0F3F8;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: 'Outfit';
 }
 
 .my-table-styling2.ant-table-wrapper .ant-table-tbody>tr>td {
@@ -159,7 +159,7 @@ select:focus {
   padding: 10px 12px;
   background-color: #F0F3F8;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: 'Outfit';
 }
 
 .my-first-datepicker.ant-picker {
@@ -181,11 +181,16 @@ select:focus {
   padding: 10px;
   background-color: #F0F3F8;
   font-weight: 600;
-  font-family: 'Poppins';
+  font-family: 'Outfit';
 }
 
 :where(.css-dev-only-do-not-override-1rfzxih).ant-input-affix-wrapper {
   border-radius: 3px;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-btn-variant-outlined,
+:where(.css-dev-only-do-not-override-1rfzxih).ant-btn-variant-dashed {
+  font-family: 'Outfit';
 }
 
 .clean-scrollbar {
@@ -212,12 +217,20 @@ select:focus {
   height: 20px;
 }
 
+:where(.css-dev-only-do-not-override-1rfzxih).ant-progress .ant-progress-inner:not(.ant-progress-circle-gradient) .ant-progress-circle-path {
+  stroke: #1677ff !important;
+}
+
+:where(.css-dev-only-do-not-override-1rfzxih).ant-progress.ant-progress-circle .ant-progress-text {
+  font-family: 'Outfit' !important;
+}
+
 .today-row {
   background-color: #F3F9FF;
 }
 
 .FontChange {
-  font: 'Poppins'
+  font: 'Outfit'
 }
 
 .ant-input,
@@ -227,7 +240,7 @@ select:focus {
 .ant-range-picker-input,
 .ant-input-number-input {
   border-radius: 3px !important;
-  font-family: 'poppins';
+  font-family: 'Outfit';
 }
 
 .ant-select,
@@ -236,15 +249,15 @@ select:focus {
 .ant-range-picker,
 .ant-input-number {
   border-radius: 3px !important;
-  font-family: 'poppins';
+  font-family: 'Outfit';
 }
 
 :where(.css-dev-only-do-not-override-1rfzxih).ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
-  font-family: 'poppins';
+  font-family: 'Outfit';
 }
 
 :where(.css-dev-only-do-not-override-1rfzxih)[class^="ant-checkbox"] [class^="ant-checkbox"] {
-  font-family: 'poppins';
+  font-family: 'Outfit';
 }
 
 .custom-skeleton .ant-skeleton-content .ant-skeleton-paragraph>li {

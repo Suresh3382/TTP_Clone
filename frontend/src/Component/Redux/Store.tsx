@@ -4,9 +4,32 @@ import { applyMiddleware, combineReducers, createAsyncThunk } from "@reduxjs/too
 import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { baseURL } from "../../baseURL";
-import { ILoginInterface } from "../LoginSignUp/Content/LoginSignUpInterface";
 import dayjs, { Dayjs } from "dayjs";
 import { IcurrentUserDetails } from "../../Interfaces/FulldetailsInterface";
+import { IReports } from "../Dashboard/DashboardComponents/EmployeeComponents/Reports";
+
+interface IAuthResponseData {
+    message: string;
+    result: {
+        Onboadring: boolean;
+        accessToken: string;
+        refreshToken: string;
+        role: "ADMIN"| "USER";
+        user: string;
+        _id: string;
+    };
+    success: boolean;
+}
+
+export interface ILoginResponse {
+    data: IAuthResponseData;
+}
+
+interface ILoginInterface {
+    email: string;
+    password: string;
+}
+
 
 export enum EReportsStatus {
     Present,
@@ -49,11 +72,8 @@ export interface ILocal {
         status: EReportsStatus;
     },
     selectedUser: IcurrentUserDetails | null;
-    dayRecords: {
-        date: Dayjs | null,
-        onTime: boolean | null;
-        requiredHours: string | null;
-    }
+    loggedUserReport: IReports | null;
+    dataLoading: boolean;
 }
 
 const initialLocalState: ILocal = {
@@ -72,11 +92,8 @@ const initialLocalState: ILocal = {
         status: EReportsStatus.Absent
     },
     selectedUser: null,
-    dayRecords: {
-        date: null,
-        onTime: null,
-        requiredHours: null
-    }
+    loggedUserReport: null,
+    dataLoading: false
 };
 
 const authInitialState: IAuth = {
@@ -107,14 +124,19 @@ export const PanelStateSlice = createSlice({
     },
 });
 
-export const authLogin = createAsyncThunk("auth", async (values: ILoginInterface, thunkAPI) => {
-    try {
-        const response = await axios.post(`${baseURL}user/Login`, values);
-        return { data: response.data };
-    } catch (error: any) {
-        return thunkAPI.rejectWithValue(error.response?.data || error.message);
+
+export const authLogin = createAsyncThunk<ILoginResponse, ILoginInterface>(
+    "auth/login",
+    async (values: ILoginInterface, thunkAPI) => {
+        try {
+            const response = await axios.post(`${baseURL}user/Login`, values);
+            return { data: response.data };
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response?.data || error.message);
+        }
     }
-});
+);
+
 
 export const authSlice = createSlice({
     name: "Auth",
@@ -146,7 +168,7 @@ export const authSlice = createSlice({
                     state.role = result.role;
                     state.accessToken = result.accessToken;
                     state.refreshToken = result.refreshToken;
-                    state.onBoarding = result.Onboarding;
+                    state.onBoarding = result.Onboadring;
                     state.id = result._id;
                 }
             })
@@ -175,8 +197,11 @@ export const localSlice = createSlice({
         setSelectedUser: (state, action) => {
             state.selectedUser = action.payload;
         },
-        setDayRecord: (state, action) => {
-            state.dayRecords = action.payload;
+        setLoggedUserReports: (state, action) => {
+            state.loggedUserReport = action.payload;
+        },
+        setDataLoading: (state, action: PayloadAction<boolean>) => {
+            state.dataLoading = action.payload;
         }
     },
 });
@@ -205,7 +230,7 @@ export const store = configureStore({
 
 export const { setIsAdminPanel, setSelectedKey } = PanelStateSlice.actions;
 export const { setUser, setRole, setAccessToken, setRefreshToken } = authSlice.actions;
-export const { setReports, setcurrentReportDate, setSelectedUser, setDayRecord } = localSlice.actions;
+export const { setReports, setcurrentReportDate, setSelectedUser, setLoggedUserReports, setDataLoading } = localSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -15,6 +15,8 @@ import { RangePickerProps } from 'antd/es/date-picker';
 import { defaultLeaveRequestValues } from '../../../../Routes/AppRoutes';
 import { dayTypeEnum, leaveStatusEnum, leaveTypeEnum } from './LeavesType/LTEnum/LeavesTypeEnum';
 import * as yup from 'yup';
+import { RootState } from '../../../Redux/Store';
+import { useSelector } from 'react-redux';
 
 export interface IleaveRequest {
     _id?: string
@@ -46,6 +48,7 @@ const Leaves = () => {
     const [multipleDays, setMultipleDays] = useState<boolean>(false);
     const [enableHalfDay, setEnableHalfDay] = useState<boolean>();
     const [loading, setLoading] = useState<boolean>(true);
+    const loginLoading = useSelector((state: RootState) => state.localStates.dataLoading);
     const { setLeaveRequest, setRefresh, refresh, isModalOpen, setIsModalOpen, currentLeaveRequest, setCurrentLeaveRequest, ERequstName, setERequestName } = useContext<any>(UserContext);
 
     let leaveSchema = yup.object({
@@ -98,7 +101,7 @@ const Leaves = () => {
         }).catch((err) => {
             console.log('Error', err);
         });
-    }, [refresh, ERequstName, currentLeaveRequest, isModalOpen]);
+    }, [refresh, ERequstName, currentLeaveRequest, isModalOpen, loginLoading]);
 
 
     return (
@@ -172,7 +175,7 @@ const Leaves = () => {
                             <Modal
                                 title="Apply Leave"
                                 closable={{ 'aria-label': 'Custom Close Button' }}
-                                style={{ fontFamily: 'poppins' }}
+                                style={{ fontFamily: 'Outfit' }}
                                 open={isModalOpen}
                                 onCancel={() => hideModal(resetForm)}
                                 footer={null}
@@ -291,7 +294,7 @@ const Leaves = () => {
                                                 <p className="flex justify-center text-gray-400">
                                                     <CloudUpload />
                                                 </p>
-                                                <p className="ant-upload-text font-[Poppins]">Drag and Drop or <span className='text-blue-600 underline'>Click to upload</span></p>
+                                                <p className="ant-upload-text font-[Outfit]">Drag and Drop or <span className='text-blue-600 underline'>Click to upload</span></p>
                                             </Dragger>
                                             <input
                                                 className='hidden'

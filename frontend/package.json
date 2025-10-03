@@ -20,6 +20,7 @@
     "axios": "^1.8.4",
     "browser-image-compression": "^2.0.2",
     "dayjs": "^1.11.13",
+    "echarts": "^6.0.0",
     "formik": "^2.4.6",
     "jwt-check-expiration": "^1.0.5",
     "jwt-decode": "^4.0.0",

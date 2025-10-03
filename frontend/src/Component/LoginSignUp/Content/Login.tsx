@@ -1,22 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router";
 import * as Yup from 'yup';
-import axios from 'axios';
 import { Checkbox, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
 import { Form, Formik } from 'formik';
-import { ILoginInterface } from './LoginSignUpInterface';
-import { baseURL } from '../../../baseURL';
+import { ILogin } from './LoginSignUpInterface';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, authLogin, RootState, setIsAdminPanel, setSelectedKey } from '../../Redux/Store';
+import { AppDispatch, authLogin, ILoginResponse, RootState, setIsAdminPanel, setSelectedKey } from '../../Redux/Store';
 
 const Login = () => {
     const navigate = useNavigate();
     const [rememberMe, setRememberMe,] = useState<boolean>(false);
-    const { role, accessToken } = useSelector((state: RootState) => state.authLogin);
+    const { role } = useSelector((state: RootState) => state.authLogin);
     const dispatch = useDispatch<AppDispatch>();
 
     const loginInitialValue = {
+        email: '',
         username: '',
         password: ''
     }
@@ -25,52 +24,65 @@ const Login = () => {
         password: Yup.string().required('Password is required!')
     })
 
-    const hanldeSubmit = async (values: ILoginInterface) => {
+    const handleSubmit = async (values: ILogin) => {
         dispatch(authLogin(values)).then((result) => {
-            if (result.payload) {
-                if (role === "ADMIN") {
-                    dispatch(setIsAdminPanel(true));
-                    navigate('/adminDashboard');
-                    dispatch(setSelectedKey('/adminDashboard'));
-                }
-                else {
-                    dispatch(setIsAdminPanel(false));
-                    navigate('/home');
-                    dispatch(setSelectedKey('/home'));
+
+            const payload = result.payload as ILoginResponse;
+            console.log(payload);
+
+            if (payload && payload.data) {
+                const role = payload.data.result.role;
+                const onBoarding = payload.data.result.Onboadring;
+                if (onBoarding) {
+                    if (role === "ADMIN") {
+                        dispatch(setIsAdminPanel(true));
+                        navigate('/adminDashboard');
+                        dispatch(setSelectedKey('/adminDashboard'));
+                    } else {
+                        dispatch(setIsAdminPanel(false));
+                        navigate('/home');
+                        dispatch(setSelectedKey('/home'));
+                    }
+                } else {
+                    navigate('/onboarding');    
                 }
             }
+        }).catch((error) => {
+            console.error("Login error:", error);
         });
-        // try {
-        //     const response = await axios.post(`${baseURL}user/Login`, values);
-        //     if (response.data.result) {
-        //         const AccessToken = response.data.result.accessToken;
-        //         const RefreshToken = response.data.result.refreshToken;
-        //         localStorage.setItem('username', response?.data?.result?.user);
-        //         if (rememberMe) {
-        //             localStorage.setItem('AccessToken', AccessToken);
-        //             localStorage.setItem('RefreshToken', RefreshToken);
-        //         } else {
-        //             sessionStorage.setItem('AccessToken', AccessToken);
-        //             sessionStorage.setItem('RefreshToken', RefreshToken);
-        //         }
-        //         if (response?.data?.result?.Onboadring) {
-        //             if (response?.data?.result?.role === 'ADMIN') {
-        //                 // dispatch(setIsAdminPanel(true));
-        //                 navigate('/adminDashboard');
-        //                 dispatch(setSelectedKey('/adminDashboard'));
-        //             } else {
-        //                 // dispatch(setIsAdminPanel(false));
-        //                 navigate('/home');
-        //                 dispatch(setSelectedKey('/home'));
-        //             }
-        //         } else {
-        //             navigate('/onboarding');
-        //         }
-        //     }
-        // } catch (error) {
-        //     console.log("Error :", error);
-        // }
-    }
+    };
+
+    // try {
+    //     const response = await axios.post(`${baseURL}user/Login`, values);
+    //     if (response.data.result) {
+    //         const AccessToken = response.data.result.accessToken;
+    //         const RefreshToken = response.data.result.refreshToken;
+    //         localStorage.setItem('username', response?.data?.result?.user);
+    //         if (rememberMe) {
+    //             localStorage.setItem('AccessToken', AccessToken);
+    //             localStorage.setItem('RefreshToken', RefreshToken);
+    //         } else {
+    //             sessionStorage.setItem('AccessToken', AccessToken);
+    //             sessionStorage.setItem('RefreshToken', RefreshToken);
+    //         }
+    //         if (response?.data?.result?.Onboadring) {
+    //             if (response?.data?.result?.role === 'ADMIN') {
+    //                 // dispatch(setIsAdminPanel(true));
+    //                 navigate('/adminDashboard');
+    //                 dispatch(setSelectedKey('/adminDashboard'));
+    //             } else {
+    //                 // dispatch(setIsAdminPanel(false));
+    //                 navigate('/home');
+    //                 dispatch(setSelectedKey('/home'));
+    //             }
+    //         } else {
+    //             navigate('/onboarding');
+    //         }
+    //     }
+    // } catch (error) {
+    //     console.log("Error :", error);
+    // }
+
     //     if (isLoggedIn) {
     //         // Handle token storage based on rememberMe flag
     //         if (rememberMe) {
@@ -108,7 +120,7 @@ const Login = () => {
                         <Formik
                             initialValues={loginInitialValue}
                             validationSchema={schema}
-                            onSubmit={hanldeSubmit}
+                            onSubmit={handleSubmit}
                         >
                             {({ values, errors, touched, setFieldValue }) => (
                                 <Form>

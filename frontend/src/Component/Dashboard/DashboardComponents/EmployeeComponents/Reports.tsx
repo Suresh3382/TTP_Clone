@@ -4,9 +4,9 @@ import dayjs, { Dayjs } from 'dayjs'
 import { AlignJustify, ArrowDownLeft, ArrowUpRight, CalendarClock, ChevronDown, ChevronLeft, ChevronRight, Circle, CircleAlert, CircleCheck, CircleX, LayoutGrid, RotateCw, TentTree } from 'lucide-react'
 import { useCallApi } from '../../../../Utlits/AxiosConifg'
 import { baseURL } from '../../../../baseURL'
-import { RootState, setcurrentReportDate } from '../../../Redux/Store'
+import { RootState, setcurrentReportDate, setLoggedUserReports } from '../../../Redux/Store'
 import { convertDecimalToTimeDirect, convertDecimalToTimeDirectForMonth } from '../AdminDashboardComponents/Attendance/Attendance'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export enum ESelected {
     Layout,
@@ -25,7 +25,7 @@ interface Attendances {
     shortHours: any
     date: string,
     dayTrans: [],
-    status: EReportsStatus.Absent,
+    status: EReportsStatus,
     workingHours?: number,
     requiredHours?: number,
     extraHours?: number,
@@ -52,10 +52,12 @@ const Reports = () => {
     const { callApi } = useCallApi();
     const [refresh, setRefresh] = useState<boolean>();
     const [selected, setSelected] = useState<ESelected>(ESelected.Table);
-    const [currentMonthReports, setCurrentMonthReports] = useState<IReports>();
     const isLoading = false;
     const id = useSelector((state: RootState) => state.authLogin.id);
-    const [selectedMonth, setSelectedMonth] = useState<Dayjs>(dayjs()); 
+    const [selectedMonth, setSelectedMonth] = useState<Dayjs>(dayjs());
+    const dispatch = useDispatch();
+    const currentMonthReports = useSelector((state: RootState) => state.localStates.loggedUserReport);
+
 
     const columns = [
         {
@@ -95,7 +97,7 @@ const Reports = () => {
                                     className="custom-popover"
                                     trigger={'click'}
                                     content={
-                                        <div className="font-[poppins] p-1 space-y-1 w-80">
+                                        <div className="font-[Outfit] p-1 space-y-1 w-80">
                                             <span className="flex gap-2 text-base font-[500] px-2 justify-between">
                                                 {dayjs(record.date).format('MMM DD, YYYY')}
                                                 <span className="flex items-center text-xs font-medium gap-1">
@@ -182,7 +184,7 @@ const Reports = () => {
                                     className="custom-popover"
                                     trigger="click"
                                     content={
-                                        <div className="font-[poppins] p-1 space-y-1 w-80">
+                                        <div className="font-[Outfit] p-1 space-y-1 w-80">
                                             <span className="flex gap-2 text-base font-[500] px-2 justify-between">
                                                 {dayjs(record.date).format('MMM DD, YYYY')}
                                                 <span className="flex items-center text-xs font-medium gap-1">
@@ -390,7 +392,7 @@ const Reports = () => {
                 id: id
             }
         }).then((res) => {
-            setCurrentMonthReports(res?.data?.data);
+            dispatch(setLoggedUserReports(res?.data?.data));
         });
     };
 
@@ -413,8 +415,8 @@ const Reports = () => {
                                 getReports(e);
                             }
                         }}
-                        picker="month" format={'MMMM YYYY'} className='my-first-datepicker mx-2 flex justify-center border-0 font-[Poppins]' suffixIcon={<ChevronDown className='text-black' size={22} />} />
-                    <ChevronRight size={28} onClick={() => { setSelectedMonth(selectedMonth.add(1, 'M')), getReports(selectedMonth.add(1, 'M')) }} className='bg-gray-cursor-pointer 200 rounded-sm text-gray-600' />
+                        picker="month" format={'MMMM YYYY'} className='my-first-datepicker mx-2 flex justify-center border-0 font-[Outfit]' suffixIcon={<ChevronDown className='text-black' size={22} />} />
+                    <ChevronRight size={28} onClick={() => { setSelectedMonth(selectedMonth.add(1, 'M')), getReports(selectedMonth.add(1, 'M')) }} className='bg-gray-200 cursor-pointer rounded-sm text-gray-600' />
                 </div>
                 <div className='flex gap-1 items-center'>
                     <RotateCw size={32} className='cursor-pointer p-1.5 rounded bg-blue-100 text-blue-500' onClick={() => { setRefresh(prevRefresh => !prevRefresh) }} />

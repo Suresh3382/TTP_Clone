@@ -17,7 +17,7 @@ import AllRequest from '../../Leaves/LeavesType/AllRequest';
 import { leaveTypeEnum, dayTypeEnum, leaveStatusEnum } from '../../Leaves/LeavesType/LTEnum/LeavesTypeEnum';
 import { IContext } from '../../../../../Context/UserContextInterface';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setDayRecord } from '../../../../Redux/Store';
+import { RootState } from '../../../../Redux/Store';
 import Attendance from './Attendance';
 
 enum EAttendanceStatus {
@@ -131,7 +131,7 @@ const AttendanceForm = () => {
                             }
                             callApi({ requestEndpoint: `${baseURL}user/leaveRequest`, method: 'post', body: LeavesFinalValues }).then((res) => {
                                 resetForm();
-                                
+
                             }).catch((err) => {
                                 console.log('Error', err);
                             })
@@ -149,7 +149,7 @@ const AttendanceForm = () => {
                             remark: values.remark,
                         }
                         callApi({ requestEndpoint: `${baseURL}user/updateuserReports`, method: 'post', body: finalValues }).then((res) => {
-                            dispatch(setDayRecord(res?.data?.dayRecords));
+                            console.log(res)
                         })
                         resetForm();
                         setIsAttendanceFormModalOpen(false);
@@ -402,7 +402,7 @@ const AttendanceForm = () => {
                                                 <p className="flex justify-center text-gray-400">
                                                     <CloudUpload />
                                                 </p>
-                                                <p className="ant-upload-text font-[Poppins]">Drag and Drop or <span className='text-blue-600 underline'>Click to upload</span></p>
+                                                <p className="ant-upload-text font-[Outfit]">Drag and Drop or <span className='text-blue-600 underline'>Click to upload</span></p>
                                             </Dragger>
                                             <input
                                                 className='hidden'

@@ -83,12 +83,12 @@ const Request = () => {
     };
 
     const rangePresets: TimeRangePickerProps['presets'] = [
-        { label: <span className='font-[poppins] text-[13px]'>Today</span>, value: [dayjs(), dayjs()] },
-        { label: <span className='font-[poppins] text-[13px]'>Tomorrow</span>, value: [dayjs().add(1, 'd'), dayjs().add(1, 'd')] },
-        { label: <span className='font-[poppins] text-[13px]'>Next 7 Days</span>, value: [dayjs().add(7, 'd'), dayjs()] },
-        { label: <span className='font-[poppins] text-[13px]'>Next 14 Days</span>, value: [dayjs().add(14, 'd'), dayjs()] },
-        { label: <span className='font-[poppins] text-[13px]'>This Month</span>, value: [dayjs().startOf('month'), dayjs().endOf('month')] },
-        { label: <span className='font-[poppins] text-[13px]'>Next Month</span>, value: [dayjs().add(1, 'month').startOf('month'), dayjs().add(1, 'month').endOf('month')] },
+        { label: <span className='font-[Outfit] text-[13px]'>Today</span>, value: [dayjs(), dayjs()] },
+        { label: <span className='font-[Outfit] text-[13px]'>Tomorrow</span>, value: [dayjs().add(1, 'd'), dayjs().add(1, 'd')] },
+        { label: <span className='font-[Outfit] text-[13px]'>Next 7 Days</span>, value: [dayjs().add(7, 'd'), dayjs()] },
+        { label: <span className='font-[Outfit] text-[13px]'>Next 14 Days</span>, value: [dayjs().add(14, 'd'), dayjs()] },
+        { label: <span className='font-[Outfit] text-[13px]'>This Month</span>, value: [dayjs().startOf('month'), dayjs().endOf('month')] },
+        { label: <span className='font-[Outfit] text-[13px]'>Next Month</span>, value: [dayjs().add(1, 'month').startOf('month'), dayjs().add(1, 'month').endOf('month')] },
     ];
 
     // const deboucingExample = () => {
@@ -409,7 +409,7 @@ const Request = () => {
                     <div></div>
                     {/* <Button color='primary' variant='outlined' >Leave Application</Button> */}
                     <div className='flex gap-2'>
-                        <DatePicker.RangePicker presets={rangePresets} placeholder={["DD/MM/YYYY", "DD/MM/YYYY"]} format={'DD/MM/YY'} className='font-[Poppins] w-52' onChange={onChange} />
+                        <DatePicker.RangePicker presets={rangePresets} placeholder={["DD/MM/YYYY", "DD/MM/YYYY"]} format={'DD/MM/YY'} className='font-[Outfit] w-52' onChange={onChange} />
                         <RotateCw size={32} className='cursor-pointer p-1.5 rounded bg-blue-100 text-blue-500' onClick={() => { setIsLoading(true), setRefresh(prevRefresh => !prevRefresh) }} />
                         <Input onKeyDown={handleNameValues} onChange={(e: any) => { e.target.value === "" && setNameFilterLeaves('') }} placeholder="Search" style={{ width: 200 }} className='me-3' suffix={<Search size={18} />} />
                     </div>
@@ -446,7 +446,7 @@ const Request = () => {
                     open={isModalOpen}
                     onCancel={() => { setIsModalOpen(false) }}
                     width={900}
-                    className='font-[Poppins]'
+                    className='font-[Outfit]'
                     destroyOnHidden
                 >
                     {currentLeaveEdit?.status === 1 ? (<div className='w-100% flex flex-row gap-4'>

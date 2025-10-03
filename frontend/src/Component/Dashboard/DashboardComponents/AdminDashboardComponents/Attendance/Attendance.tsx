@@ -96,7 +96,7 @@ const Attendance = () => {
                                     className="custom-popover"
                                     trigger={'click'}
                                     content={
-                                        <div className="font-[poppins] p-1 space-y-1 w-80">
+                                        <div className="font-[Outfit] p-1 space-y-1 w-80">
                                             <span className="flex gap-2 text-base font-[500] px-2 justify-between">
                                                 {dayjs(record.date).format('MMM DD, YYYY')}
                                                 <span className="flex items-center text-xs font-medium gap-1">
@@ -183,7 +183,7 @@ const Attendance = () => {
                                     className="custom-popover"
                                     trigger="click"
                                     content={
-                                        <div className="font-[poppins] p-1 space-y-1 w-80">
+                                        <div className="font-[Outfit] p-1 space-y-1 w-80">
                                             <span className="flex gap-2 text-base font-[500] px-2 justify-between">
                                                 {dayjs(record.date).format('MMM DD, YYYY')}
                                                 <span className="flex items-center text-xs font-medium gap-1">
@@ -538,7 +538,7 @@ const Attendance = () => {
                                             getReports(e);
                                         }
                                     }}
-                                    picker="month" format={'MMMM YYYY'} className='my-first-datepicker mx-2 flex justify-center border-0 font-[Poppins]' suffixIcon={<ChevronDown className='text-black' size={22} />} />
+                                    picker="month" format={'MMMM YYYY'} className='my-first-datepicker mx-2 flex justify-center border-0 font-[Outfit]' suffixIcon={<ChevronDown className='text-black' size={22} />} />
                                 <ChevronRight size={28} onClick={() => { setSelectedMonth(selectedMonth.add(1, 'M')), getReports(selectedMonth.add(1, 'M')) }} className='bg-gray-200 rounded-sm text-gray-600' />
                             </div>
                             <div className='flex gap-1'>
@@ -668,7 +668,7 @@ const Attendance = () => {
                             </div>
                         }
                         closable={{ 'aria-label': 'Custom Close Button' }}
-                        style={{ fontFamily: 'Poppins' }}
+                        style={{ fontFamily: 'Outfit' }}
                         open={isAttendanceFormModalOpen}
                         onCancel={() => setIsAttendanceFormModalOpen(false)}
                         footer={null}

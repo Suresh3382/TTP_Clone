@@ -1,7 +1,7 @@
-import React, { lazy, useContext, useEffect, useState } from 'react';
+import  {  useContext,  useState } from 'react';
 import { BellOutlined, DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Avatar, Button, Input, Menu, Modal, Popover } from 'antd';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import UserContext from '../../Context/UserContext';
 import { baseURL } from '../../baseURL';
 import Leaves from './DashboardComponents/Leaves/Leaves';
@@ -133,7 +133,7 @@ const Dashboard = () => {
                                 key={item.key}
                                 title={null}
                                 icon={
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '60px' }} className='font-[poppins] py-1.5 gap-0.5'>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '60px' }} className='font-[Outfit] py-1.5 gap-0.5'>
                                         <div>{item.icon}</div>
                                         <span className='mt-1 text-[10px]'>{item.label}</span>
                                     </div>
@@ -167,7 +167,7 @@ const Dashboard = () => {
                                     placement="bottomRight"
                                     trigger={'click'}
                                     content={
-                                        <div className="font-[Poppins] w-72 p-4 bg-gradient-to-b from-blue-500/10 to-white backdrop-blur-lg rounded-[6px] ">
+                                        <div className="font-[Outfit] w-72 p-4 bg-gradient-to-b from-blue-500/10 to-white backdrop-blur-lg rounded-[6px] ">
                                             <div className="text-center mx-auto">
                                                 {loggedUser.pfp ? (
                                                     <div className='mx-auto border-2 border-blue-800 rounded-full w-[92px] h-[92px] flex items-center justify-center'>
@@ -205,7 +205,7 @@ const Dashboard = () => {
                                                         }}
                                                     >
                                                         <User size={24} className='p-1 bg-white rounded' />
-                                                        <span className='font-[poppins]'>{isAdmin ? "Employee Panel" : "Admin Panel"}</span>
+                                                        <span className='font-[Outfit]'>{isAdmin ? "Employee Panel" : "Admin Panel"}</span>
                                                     </Button>
                                                 </div>
                                                 : null
@@ -215,7 +215,7 @@ const Dashboard = () => {
                                                 <Button
                                                     type="text"
                                                     onClick={() => setmodalOpen(true)}
-                                                    className="w-full font-[poppins] flex justify-start gap-5 text-12 bg-slate-100 text-gray-600 border-none"
+                                                    className="w-full font-[Outfit] flex justify-start gap-5 text-12 bg-slate-100 text-gray-600 border-none"
                                                 >
                                                     <SquareAsterisk size={24} className='p-1 bg-white rounded' />
                                                     Change Password

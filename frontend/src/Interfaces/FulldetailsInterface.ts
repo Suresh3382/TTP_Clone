@@ -69,4 +69,5 @@ export interface IcurrentUserDetails {
     firstName?: string,
     lastName?: string,
     role: "USER" | "ADMIN" | undefined,
+    isOnboarding?: boolean
 }
