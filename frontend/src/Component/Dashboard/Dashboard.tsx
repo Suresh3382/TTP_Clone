@@ -1,21 +1,22 @@
-import  {  useContext,  useState } from 'react';
+import { useContext, useState } from 'react';
 import { BellOutlined, DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Avatar, Button, Input, Menu, Modal, Popover } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import UserContext from '../../Context/UserContext';
 import { baseURL } from '../../baseURL';
-import Leaves from './DashboardComponents/Leaves/Leaves';
-import Profile from './DashboardComponents/Profile/Profile';
-import Home from './DashboardComponents/Home';
-import { Calendar, ChartNoAxesColumnIncreasing, CircleUserRound, HousePlus, icons, LayoutGrid, LogOut, SquareAsterisk, SquareUserRound, Star, User } from 'lucide-react';
-import AdminDashboard from './DashboardComponents/AdminDashboardComponents/AdminDashboard';
-import Request from './DashboardComponents/AdminDashboardComponents/Request';
-import Reports from './DashboardComponents/EmployeeComponents/Reports';
+import { Calendar, ChartNoAxesColumnIncreasing, CircleUserRound, HousePlus, LayoutGrid, LogOut, SquareAsterisk, SquareUserRound, Star, User, Users } from 'lucide-react';
 import { IContext } from '../../Context/UserContextInterface';
-import Attendance from './DashboardComponents/AdminDashboardComponents/Attendance/Attendance';
 import { useDispatch, useSelector } from 'react-redux';
 import { IPanelState, setIsAdminPanel, setSelectedKey } from '../Redux/Store';
 import { useCallApi } from '../../Utlits/AxiosConifg';
+import Request from './DashboardComponents/AdminDashboardComponents/Request';
+import AdminDashboard from './DashboardComponents/AdminDashboardComponents/AdminDashboard';
+import Attendance from './DashboardComponents/AdminDashboardComponents/Attendance/Attendance';
+import Employees from './DashboardComponents/AdminDashboardComponents/Employess/Employees';
+import Reports from './DashboardComponents/EmployeeComponents/Reports';
+import Leaves from './DashboardComponents/Leaves/Leaves';
+import Profile from './DashboardComponents/Profile/Profile';
+import Home from './DashboardComponents/Home';
 
 
 
@@ -61,6 +62,11 @@ const Dashboard = () => {
                     icon: <LayoutGrid size={21} />
                 },
                 {
+                    key: '/employees',
+                    label: 'Employees',
+                    icon: <Users size={21} />
+                },
+                {
                     key: '/request',
                     label: 'Request',
                     icon: <CircleUserRound size={21} />
@@ -69,7 +75,7 @@ const Dashboard = () => {
                     key: '/attendance',
                     label: 'Attendance',
                     icon: <Calendar size={21} />
-                }
+                },
             ];
 
     const handleLogout = () => {
@@ -296,6 +302,7 @@ const Dashboard = () => {
                             <Route path="/adminDashboard" element={<AdminDashboard />} />
                             <Route path="/request" element={<Request />} />
                             <Route path='/attendance' element={<Attendance />} />
+                            <Route path='/employees' element={<Employees />} />
                         </Routes>
                     </div>
                 </div>

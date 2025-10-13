@@ -151,7 +151,7 @@ select:focus {
 }
 
 .my-table-styling2.ant-table-wrapper .ant-table-tbody>tr>td {
-  padding: 12px;
+  padding: 10px;
 }
 
 .my-table-styling2.ant-table-wrapper .ant-table-thead>tr>th,
@@ -193,6 +193,22 @@ select:focus {
   font-family: 'Outfit';
 }
 
+.themed-bt {
+  background-color: #186DED;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.themed-bt:hover {
+  background-color: #227dfd !important;
+  color: white !important;
+}
+
 .clean-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #d1d5db transparent;
@@ -230,7 +246,12 @@ select:focus {
 }
 
 .FontChange {
-  font: 'Outfit'
+  font-family: 'Outfit'
+}
+
+.ant-radio-button-wrapper {
+  text-align: center;
+  font-family: 'Outfit';
 }
 
 .ant-input,

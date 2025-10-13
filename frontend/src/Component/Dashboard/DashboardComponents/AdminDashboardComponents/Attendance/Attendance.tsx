@@ -608,7 +608,7 @@ const Attendance = () => {
                                         <Skeleton.Button size='small' className='py-[5.5px]' style={{ height: '20px' }} /> :
                                         <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthLeaveToken : '0'}</p>
                                     }
-                                    <p className='flex bg-purple-50 text-xs rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-purple-500' size={12} />Leave Token</p>
+                                    <p className='flex bg-purple-50 text-xs rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-purple-500' size={12} />Leave Taken</p>
                                 </div>
                                 <div className='bg-white flex flex-col gap-1 w-40 text-center py-3 rounded-lg'>
                                     {isLoading ?

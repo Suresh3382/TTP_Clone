@@ -1,10 +1,10 @@
-import { Progress } from 'antd';
+import { Progress, Radio } from 'antd';
 import { ArrowDownLeft, ArrowUpRight, Calendar, CalendarClock, CalendarPlus, CalendarX, Circle, CircleCheck, CircleX, Hourglass, TentTree, Timer, X } from 'lucide-react';
 import { EReportsStatus } from './EmployeeComponents/Reports';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setLoggedUserReports, setSelectedKey } from '../../Redux/Store';
 import dayjs, { Dayjs } from 'dayjs';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { baseURL } from '../../../baseURL';
 import { useCallApi } from '../../../Utlits/AxiosConifg';
 import UserContext from '../../../Context/UserContext';
@@ -17,7 +17,14 @@ import * as echarts from 'echarts/core';
 import { BarChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { LegendComponent, TooltipComponent, GridComponent } from 'echarts/components';
+import { boolean } from 'yup';
+import Checkbox from 'antd/es/checkbox/Checkbox';
 echarts.use([LegendComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer]);
+
+enum EView {
+    attendanceStatistics,
+    timingDetails
+}
 
 const Home = () => {
     const { callApi } = useCallApi();
@@ -27,6 +34,7 @@ const Home = () => {
     const id = useSelector((state: RootState) => state.authLogin.id);
     const currentMonthReports = useSelector((state: RootState) => state.localStates.loggedUserReport);
     const chartRef = useRef(null);
+    const [view, setView] = useState<EView>(EView.timingDetails);
 
     const convertDecimalToTime = (decimalHours: number) => {
         const minutes = decimalHours * 60;
@@ -56,7 +64,6 @@ const Home = () => {
 
     workingHoursProgress = workingHours && requiredHours && (workingHours / requiredHours * 100);
 
-
     useEffect(() => {
         const myChart = echarts.init(chartRef.current);
         const sevenDays: any[] = [];
@@ -75,16 +82,28 @@ const Home = () => {
 
         const option = {
             tooltip: {
-                trigger: 'axis',
+                trigger: 'item',
+                formatter: function (params: any) {
+                    const date = dayjs(params.name).format('DD MMM');
+                    const hours = params.value || 0;
+                    return `${date}<br/>Working Hours: <b>${hours} hours</b>`;
+                },
+                axisPointer: {
+                    type: 'none',
+                },
             },
             legend: {
                 top: 10,
                 right: 10,
                 selectedMode: false,
+                data: [
+                    { name: 'Good Job' },
+                    { name: 'Short Hours' },
+                ],
             },
             xAxis: {
                 type: 'category',
-                data: sevenDays.map((day) => dayjs(day.date).format('DD MMM')),
+                data: sevenDays.map((day) => dayjs(day.date).format('D MMM')),
                 axisLabel: {
                     fontFamily: 'Outfit',
                     fontSize: 14,
@@ -95,21 +114,42 @@ const Home = () => {
                 axisLabel: {
                     fontFamily: 'Outfit',
                     fontSize: 14,
+                    formatter: function (value: any) {
+                        const hours = value;
+                        const formattedTime = `${hours}:00`;
+                        return formattedTime;
+                    },
                 },
+                min: 0,
+            },
+            grid: {
+                bottom: 18,
             },
             series: [
                 {
-                    name: "Working Hours",
-                    data: sevenDays.map((day, index) => {
-                        return shortHoursData.length > 0 ? workingHoursData[index] : 0;
-                    }),
+                    name: 'Good Job',
+                    data: workingHoursData,
                     type: 'bar',
                     itemStyle: {
                         color: (params: any) => {
                             return shortHoursData[params.dataIndex] > 0 ? '#ffb9cc' : '#226fffff';
                         },
-                        borderRadius: [5, 5, 0, 0],
+                        borderRadius: [3, 3, 0, 0],
                     },
+                    barWidth: '30%',
+                },
+                {
+                    name: 'Short Hours',
+                    data: [],
+                    type: 'bar',
+                    itemStyle: {
+                        color: '#ffb9cc',
+                    },
+                    barWidth: '0%',
+                    tooltip: {
+                        show: false,
+                    },
+                    silent: true,
                 },
             ],
         };
@@ -120,7 +160,6 @@ const Home = () => {
             myChart.dispose();
         };
     }, [currentMonthReports]);
-
 
 
     const getReports = (e: Dayjs) => {
@@ -159,7 +198,7 @@ const Home = () => {
         <div className='w-full flex gap-3'>
             <div className='w-3/4'>
                 <div className='border rounded-xl flex'>
-                    <div className='flex gap-3.5 flex-col p-4 w-2/3 border-r'>
+                    <div className='flex gap-3.5 flex-col p-4 w-[62%] border-r'>
                         <div className='flex gap-3.5 flex-col'>
                             <div className='flex justify-between items-center'>
                                 <div className='flex gap-4 items-center'>
@@ -215,43 +254,47 @@ const Home = () => {
                             </div>
                         }
                         {status === EReportsStatus.Present && (
-                            <div
-                                className={`bg-gray-200 h-[78px] px-2.5 flex gap-2 items-center rounded-xl ${dayTrans.length > 6 ? 'overflow-x-scroll clean-scrollbar' : ''}`}
-                            >
-                                {dayTrans.map((dayTrans: Dayjs, index: number) => {
-                                    return (
-                                        <div className="space-y-1" key={index}>
-                                            <div className="px-5 py-2.5 rounded-xl flex items-center gap-2.5 bg-white">
-                                                {index % 2 === 0 ? (
-                                                    <div className='flex flex-col text-sm'>
-                                                        <span>Check In</span>
-                                                        <span className='flex gap-1 items-center text-sm'>
-                                                            <ArrowDownLeft
-                                                                strokeWidth={3}
-                                                                size={14}
-                                                                className="text-green-600 border-2 border-green-600 rounded hover:bg-green-100 cursor-pointer"
-                                                            />
-                                                            <span>{dayTrans ? dayjs(dayTrans).format('hh:mm A') : 'No Check-out'}</span>
-                                                        </span>
-                                                    </div>
-                                                ) : (
-                                                    <div className='flex flex-col text-sm'>
-                                                        <span>Check Out</span>
-                                                        <span className='flex gap-1 items-center text-sm'>
-                                                            <ArrowUpRight
-                                                                strokeWidth={3}
-                                                                size={14}
-                                                                className="text-red-600 border-2 border-red-600 rounded hover:bg-red-100 cursor-pointer"
-                                                            />
-                                                            <span>{dayTrans ? dayjs(dayTrans).format('hh:mm A') : 'No Check-out'}</span>
-                                                        </span>
-                                                    </div>
-                                                )}
+                            <div className="w-full bg-gray-200 h-[78px] rounded-xl pt-2 px-2">
+                                <div
+                                    className={`flex gap-2 items-center rounded-xl ${dayTrans.length > 5 ? 'overflow-x-scroll clean-scrollbar' : ''}`}
+                                    style={{ maxWidth: "100%", boxSizing: "border-box" }}
+                                >
+                                    {dayTrans.map((dayTrans: Dayjs, index: number) => {
+                                        return (
+                                            <div className="space-y-1 flex-shrink-0" key={index}>
+                                                <div className="px-5 py-2.5 rounded-xl flex items-center gap-2.5 bg-white">
+                                                    {index % 2 === 0 ? (
+                                                        <div className='flex flex-col text-sm flex-shrink-0'>
+                                                            <span>Check In</span>
+                                                            <span className='flex gap-1 items-center text-sm'>
+                                                                <ArrowDownLeft
+                                                                    strokeWidth={3}
+                                                                    size={14}
+                                                                    className="text-green-600 border-2 border-green-600 rounded hover:bg-green-100 cursor-pointer"
+                                                                />
+                                                                <span>{dayTrans ? dayjs(dayTrans).format('hh:mm A') : 'No Check-out'}</span>
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='flex flex-col text-sm flex-shrink-0'>
+                                                            <span>Check Out</span>
+                                                            <span className='flex gap-1 items-center text-sm'>
+                                                                <ArrowUpRight
+                                                                    strokeWidth={3}
+                                                                    size={14}
+                                                                    className="text-red-600 border-2 border-red-600 rounded hover:bg-red-100 cursor-pointer"
+                                                                />
+                                                                <span>{dayTrans ? dayjs(dayTrans).format('hh:mm A') : 'No Check-out'}</span>
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                                </div>
                             </div>
+
                         )}
                         {status === EReportsStatus.FullLeave || status === EReportsStatus.HalfLeave &&
                             <div className='bg-purple-50 h-[70px] flex justify-center items-center rounded'>
@@ -262,12 +305,78 @@ const Home = () => {
                             </div>
                         }
                     </div>
-                    <div className='p-4 w-1/3'>
-                        <div className='bg-gray-100 p-2 rounded flex justify-center'>
-                            {/* <Radio.Group defaultValue={1} buttonStyle='solid'>
-                                <Radio.Button value={1}>Attendance Statistics</Radio.Button>
-                                <Radio.Button value={2}>Timing Details</Radio.Button>
-                            </Radio.Group> */}
+                    <div className="p-4 w-[38%]">
+                        <div className="bg-gray-100 p-2 rounded flex justify-center">
+                            <Radio.Group defaultValue={1} onChange={(e: any) => { setView(e.target.value), console.log(e.target.value,"eeewww") }} buttonStyle="solid" className="w-full flex">
+                                <Radio.Button value={0} className="w-1/2">Attendance Statistics</Radio.Button>
+                                <Radio.Button value={1} className="w-1/2">Timing Details</Radio.Button>
+                            </Radio.Group>
+                        </div>
+                        <div>
+                            {view === EView.attendanceStatistics ?
+                                <div>
+                                    ////////////////////
+                                </div>
+                                :
+                                <div className='flex flex-col gap-2 mt-2'>
+                                    <div className='flex rounded-xl py-2 px-3 bg-gray-100'>
+                                        <span className='flex items-center justify-between w-full text-sm'>
+                                            <span className='border-l-[3px] border-blue-700 ps-2 text-xs text-gray-400'>
+                                                Shift Timing
+                                            </span>
+                                            10:00 AM - 08:00 PM
+                                        </span>
+                                    </div>
+
+                                    <div className='flex justify-between rounded-xl py-2 px-3 bg-gray-100'>
+                                        <span className='flex items-center justify-between w-full text-sm'>
+                                            <span className='border-l-[3px] border-blue-700 ps-2 text-xs text-gray-400'>
+                                                Lunch
+                                            </span>
+                                            60 Min
+                                        </span>
+                                    </div>
+
+                                    <div className='flex flex-col justify-between rounded-xl pt-2 pb-1 px-3 bg-gray-100'>
+                                        <span className='flex items-center justify-between w-full text-sm'>
+                                            <span className='border-l-[3px] border-blue-700 ps-2 text-xs text-gray-400'>
+                                                Working Days
+                                            </span>
+                                            5 Days
+                                        </span>
+                                        <span className='flex gap-2 mt-2 overflow-x-auto clean-scrollbar w-full'>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Mon</span>
+                                                <Checkbox defaultChecked disabled className='m-0 p-0' />
+                                            </div>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Tue</span>
+                                                <Checkbox defaultChecked disabled className='m-0 p-0' />
+                                            </div>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Wed</span>
+                                                <Checkbox defaultChecked disabled className='m-0 p-0' />
+                                            </div>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Thu</span>
+                                                <Checkbox defaultChecked disabled className='m-0 p-0' />
+                                            </div>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Fri</span>
+                                                <Checkbox defaultChecked disabled className='m-0 p-0' />
+                                            </div>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Sat</span>
+                                                <Checkbox disabled className='m-0 p-0' />
+                                            </div>
+                                            <div className='flex flex-col gap-1 bg-white w-14 h-14 items-center justify-center rounded-xl flex-shrink-0'>
+                                                <span className='text-sm font-semibold text-gray-800'>Sun</span>
+                                                <Checkbox disabled className='m-0 p-0' />
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -309,7 +418,7 @@ const Home = () => {
                                     <CalendarPlus className='text-purple-500' size={24} />
                                 </div>
                             </div>
-                            <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthOnTime : '0'}</p>
+                            <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthLeaveToken : '0'}</p>
                             <p className='flex bg-purple-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'>
                                 <Circle className='text-purple-500' size={12} />Leave
                             </p>
@@ -458,7 +567,7 @@ const Home = () => {
                                         <span className='text-sm'>{dayjs(att.date).format('MMM DD')}</span>
                                     </div>
                                     <div>
-                                        <span className='text-sm w-4/5'>
+                                        <span className='text-sm w-4/3'>
                                             {att.status === EReportsStatus.Absent && <span className='flex gap-1 items-center text-sm'>
                                                 <CircleX size={14} color='red' />
                                                 Absent
@@ -468,9 +577,9 @@ const Home = () => {
                                                     {dayTrans.map((day: Dayjs, index: number) => {
                                                         return (
                                                             <div className="space-y-1" key={index}>
-                                                                <div className="rounded-xl flex items-center mr-3">
+                                                                <div className="rounded-xl flex items-center">
                                                                     {index === 0 && (
-                                                                        <div className='flex flex-col text-sm'>
+                                                                        <div className='flex flex-col text-sm mr-2'>
                                                                             <span className='flex gap-1 items-center text-sm'>
                                                                                 <ArrowDownLeft
                                                                                     strokeWidth={3}
@@ -518,7 +627,7 @@ const Home = () => {
                         <p className="text-gray-500 italic px-3">No reports for the current month.</p>
                     )}
                 </div>
-                <div className='flex justify-between px-3 py-3'>
+                <div className='flex justify-between px-3 pt-4 pb-2'>
                     <p className='flex gap-1.5 items-center text-xs'><CircleCheck size={16} color='green' />Present</p>
                     <p className='flex gap-1.5 items-center text-xs'><CircleX size={16} color='red' />Absent</p>
                     <p className='flex gap-1.5 items-center text-xs'><CalendarClock size={16} color='purple' />Full Leave</p>

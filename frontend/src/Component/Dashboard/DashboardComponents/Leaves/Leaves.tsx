@@ -5,18 +5,24 @@ import Dragger from 'antd/es/upload/Dragger';
 import imageCompression from 'browser-image-compression';
 import dayjs, { Dayjs } from 'dayjs';
 import { Formik, Form, FormikState } from 'formik';
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useCallApi } from '../../../../Utlits/AxiosConifg';
 import { baseURL } from '../../../../baseURL';
 import AllRequest from './LeavesType/AllRequest';
-import { CloudUpload } from 'lucide-react';
+import { Circle, CloudUpload } from 'lucide-react';
 import UserContext from '../../../../Context/UserContext';
 import { RangePickerProps } from 'antd/es/date-picker';
 import { defaultLeaveRequestValues } from '../../../../Routes/AppRoutes';
 import { dayTypeEnum, leaveStatusEnum, leaveTypeEnum } from './LeavesType/LTEnum/LeavesTypeEnum';
 import * as yup from 'yup';
+import * as echarts from 'echarts/core';
+import { BarChart } from 'echarts/charts';
 import { RootState } from '../../../Redux/Store';
 import { useSelector } from 'react-redux';
+import { LegendComponent, TooltipComponent, GridComponent, TitleComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+import { formatCounter } from 'antd/es/statistic/utils';
+echarts.use([LegendComponent, TooltipComponent, TitleComponent, GridComponent, BarChart, CanvasRenderer]);
 
 export interface IleaveRequest {
     _id?: string
@@ -45,11 +51,113 @@ export interface IleaveRequest {
 
 const Leaves = () => {
     const { callApi } = useCallApi();
+    const chartRef = useRef(null);
     const [multipleDays, setMultipleDays] = useState<boolean>(false);
     const [enableHalfDay, setEnableHalfDay] = useState<boolean>();
     const [loading, setLoading] = useState<boolean>(true);
     const loginLoading = useSelector((state: RootState) => state.localStates.dataLoading);
+
     const { setLeaveRequest, setRefresh, refresh, isModalOpen, setIsModalOpen, currentLeaveRequest, setCurrentLeaveRequest, ERequstName, setERequestName } = useContext<any>(UserContext);
+
+    let thisYearLeaves = 0;
+
+    useEffect(() => {
+        const myChart = echarts.init(chartRef.current);
+
+        callApi({
+            requestEndpoint: `${baseURL}user/getLeaveRequest`,
+            method: 'post',
+            body: { status: ERequstName },
+        })
+            .then((res) => {
+                const leaveData = res.data.data;
+
+                const monthlyLeaveCount = Array(12).fill(0);
+
+                leaveData.forEach((request: IleaveRequest) => {
+                    const month = dayjs(request.from).month();
+                    monthlyLeaveCount[month] += 1;
+                });
+
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        axisPointer: {
+                            type: 'none',
+                        },
+                    },
+                    title: {
+                        text: 'Monthly Leave',
+                        left: '20',
+                        top: '7%',
+                        textStyle: {
+                            fontFamily: 'outfit',
+                            fontSize: 18,
+                            fontWeight: 'normal', 
+                            color: '#333',
+                        },
+                    },
+                    legend: {
+                        top: '7%',
+                        right: '5%',
+                        selectedMode: false,
+                        textStyle: {
+                            fontFamily: 'outfit',
+                            fontSize: 14,
+                            color: '#333',
+                        },
+                        formatter: function () {
+                            return 'Leaves';
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: [
+                            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+                        ],
+                        axisLabel: {
+                            fontFamily: 'Outfit',
+                            fontSize: 14
+                        },
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            fontFamily: 'Outfit',
+                            fontSize: 14,
+                        },
+                        min: 0,
+                        max: 24,
+                    },
+                    grid: {
+                        top: 60,
+                        left: '8%',
+                        right: '8%',
+                        bottom: 40,
+                    },
+                    series: [
+                        {
+                            name: 'Leaves Taken',
+                            data: monthlyLeaveCount,
+                            type: 'bar',
+                            itemStyle: {
+                                borderRadius: [3, 3, 0, 0],
+                            },
+                            barWidth: '30%',
+                        },
+                    ],
+                };
+
+                myChart.setOption(option);
+
+                return () => {
+                    myChart.dispose();
+                };
+            })
+            .catch((err) => {
+                console.error('Error fetching leave data', err);
+            });
+    }, [baseURL, ERequstName]);
 
     let leaveSchema = yup.object({
         from: yup.date()
@@ -107,7 +215,7 @@ const Leaves = () => {
     return (
         <div>
             <div className='flex justify-end px-2'>
-                <Button type='primary' className='mt-1' onClick={() => setIsModalOpen(true)}><PlusOutlined />Leave</Button>
+                <Button className='themed-bt mt-1' onClick={() => setIsModalOpen(true)}><PlusOutlined />Leave</Button>
                 <Formik
                     initialValues={initialLeaveRequestValues}
                     enableReinitialize
@@ -315,6 +423,33 @@ const Leaves = () => {
                     }}
                 </Formik>
             </div>
+            <div className="flex justify-center bg-[#f0f3f8] rounded-xl w-full my-4 gap-4 p-4">
+                <div className="flex items-center flex-col justify-center gap-4">
+                    <div className="bg-white flex flex-col gap-2 w-64 text-center py-3.5 rounded-lg">
+                        <p className="text-2xl">{'12 / 12'}</p>
+                        <p className="flex bg-yellow-50 rounded-lg mx-3 my-1 flex justify-center items-center gap-2 px-4 py-1.5 text-sm">
+                            <Circle className="text-yellow-500" size={12} />
+                            Paid Available / Allotted
+                        </p>
+                    </div>
+                    <div className="bg-white flex flex-col gap-2 w-64 text-center py-3.5 rounded-lg">
+                        <p className="text-2xl">{thisYearLeaves}</p>
+                        <p className="flex bg-purple-50 rounded-lg mx-3 my-1 flex justify-center items-center gap-2 px-4 py-1.5 text-sm">
+                            <Circle className="text-purple-500" size={12} />
+                            Leave Taken
+                        </p>
+                    </div>
+                </div>
+                <div className="flex items-center justify-center w-[45%]">
+                    <div
+                        className="bg-white rounded-xl py-4"
+                        ref={chartRef}
+                        style={{ width: '100%', height: '230px', padding: 0, margin: 0 }}
+                        id="main"
+                    ></div>
+                </div>
+            </div>
+
             {loading == false ?
                 (<div className='flex flex-col gap-2'>
                     <div className='flex gap-2'>

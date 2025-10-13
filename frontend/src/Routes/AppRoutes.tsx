@@ -16,16 +16,15 @@ import ProtectedRoute from './ProtectedRoutes';
 import { Home } from 'lucide-react';
 import AdminDashboard from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/AdminDashboard';
 import Profile from '../Component/Dashboard/DashboardComponents/Profile/Profile';
-import RequestPage from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/Request';
+import Request from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/Request';
 import Reports, { ESelected, IReports } from '../Component/Dashboard/DashboardComponents/EmployeeComponents/Reports';
-
 import { baseURL } from '../baseURL';
-import { Spin } from 'antd';
 import Attendance from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/Attendance/Attendance';
 import Test from './Test';
 import { useCallApi } from '../Utlits/AxiosConifg';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Component/Redux/Store';
+import Employees from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/Employess/Employees';
 
 export const defaultLeaveRequestValues = {
   _id: '',
@@ -114,8 +113,9 @@ const AppRoutes = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/adminDashboard" element={<AdminDashboard />} />
-            <Route path="request" element={<RequestPage />} />
+            <Route path="/request" element={<Request />} />
             <Route path='/attendance' element={<Attendance />} />
+            <Route path='/employees' element={<Employees />} />
           </Route><Route
               path="/onboarding"
               element={<ProtectedRoute>
