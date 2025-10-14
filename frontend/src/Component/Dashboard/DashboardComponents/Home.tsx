@@ -307,7 +307,7 @@ const Home = () => {
                     </div>
                     <div className="p-4 w-[38%]">
                         <div className="bg-gray-100 p-2 rounded flex justify-center">
-                            <Radio.Group defaultValue={1} onChange={(e: any) => { setView(e.target.value), console.log(e.target.value,"eeewww") }} buttonStyle="solid" className="w-full flex">
+                            <Radio.Group defaultValue={1} onChange={(e: any) => { setView(e.target.value), console.log(e.target.value, "eeewww") }} buttonStyle="solid" className="w-full flex">
                                 <Radio.Button value={0} className="w-1/2">Attendance Statistics</Radio.Button>
                                 <Radio.Button value={1} className="w-1/2">Timing Details</Radio.Button>
                             </Radio.Group>
@@ -573,42 +573,45 @@ const Home = () => {
                                                 Absent
                                             </span>}
                                             {att.status === EReportsStatus.Present && (
-                                                <span className='flex gap-1 items-center text-sm'>
-                                                    {dayTrans.map((day: Dayjs, index: number) => {
+                                                <span className="flex  items-center text-sm">
+                                                    {att.dayTrans.map((check: Dayjs, index: number) => {
+                                                        const transDate = dayjs(check);
+                                                        const attendanceDate = dayjs(att.date);
+                                                        const isSameDay = transDate.isSame(attendanceDate, 'day');
                                                         return (
-                                                            <div className="space-y-1" key={index}>
-                                                                <div className="rounded-xl flex items-center">
-                                                                    {index === 0 && (
-                                                                        <div className='flex flex-col text-sm mr-2'>
-                                                                            <span className='flex gap-1 items-center text-sm'>
-                                                                                <ArrowDownLeft
-                                                                                    strokeWidth={3}
-                                                                                    size={14}
-                                                                                    className="text-green-600 border-2 border-green-600 rounded hover:bg-green-100 cursor-pointer"
-                                                                                />
-                                                                                <span>{day ? dayjs(day).format('hh:mm A') : 'No Check-out'}</span>
-                                                                            </span>
-                                                                        </div>
-                                                                    )}
-                                                                    {index === dayTrans.length - 1 && (
-                                                                        <div className='flex flex-col text-sm'>
-                                                                            <span className='flex gap-1 items-center text-sm'>
-                                                                                <ArrowUpRight
-                                                                                    strokeWidth={3}
-                                                                                    size={14}
-                                                                                    className="text-red-600 border-2 border-red-600 rounded hover:bg-red-100 cursor-pointer"
-                                                                                />
-                                                                                <span>{day ? dayjs(day).format('hh:mm A') : 'No Check-out'}</span>
-                                                                            </span>
-                                                                        </div>
-                                                                    )}
-                                                                </div>
+                                                            <div key={index}>
+                                                                {index === 0 && (
+                                                                    <div className="flex flex-col items-start gap-2">
+                                                                        <span className="flex gap-1.5 items-center text-sm">
+                                                                            <ArrowDownLeft
+                                                                                strokeWidth={3}
+                                                                                size={14}
+                                                                                className="text-green-600 border-2 border-green-600 rounded hover:bg-green-100 cursor-pointer"
+                                                                            />
+                                                                            <span className='mr-4'>{isSameDay ? transDate.format('hh:mm A') : 'No Check-in'}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                )}
+
+                                                                {index === att.dayTrans.length - 1 && (
+                                                                    <div className="flex flex-col items-start gap-2">
+                                                                        <span className="flex gap-1.5 items-center text-sm">
+                                                                            <ArrowUpRight
+                                                                                strokeWidth={3}
+                                                                                size={14}
+                                                                                className="text-red-600 border-2 border-red-600 rounded hover:bg-red-100 cursor-pointer"
+                                                                            />
+                                                                            <span>{isSameDay ? transDate.format('hh:mm A') : 'No Check-out'}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         );
                                                     })}
                                                 </span>
                                             )}
-                                            {att.status === EReportsStatus.FullLeave || att.status === EReportsStatus.HalfLeave && <span className='flex gap-1 items-center text-sm'>
+
+                                            {att.status === EReportsStatus.FullLeave && <span className='flex gap-1.5 items-center text-sm'>
                                                 <CalendarClock size={14} color='purple' />
                                                 Leave
                                             </span>}

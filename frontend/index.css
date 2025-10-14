@@ -241,9 +241,15 @@ select:focus {
   font-family: 'Outfit' !important;
 }
 
-.today-row {
-  background-color: #F3F9FF;
+.my-table-styling2 .today-row {
+  background-color: #F3F9FF !important;
 }
+
+.custom-table .ant-table-column-sorter-up,
+.custom-table .ant-table-column-sorter-down {
+  color: blue;
+}
+
 
 .FontChange {
   font-family: 'Outfit'

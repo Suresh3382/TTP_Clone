@@ -643,11 +643,26 @@ const Attendance = () => {
                     </div>
 
                     <div className='mt-2'>
-                        <Table rowClassName={(record) => {
-                            const today = dayjs();
-                            const parsedDate = dayjs(record.date, 'DD-MM-YYYY');
-                            return parsedDate.isSame(today, 'day') ? 'today-row' : '';
-                        }} className='my-table-styling2' scroll={{ y: 60 * 10, x: '100%', }} dataSource={dataSource || []} columns={columns} rowKey="_id" pagination={false} />
+                        <div className="mt-2">
+                            <Table
+                                rowClassName={(record) => {
+                                    if (record.date) {
+                                        const today = dayjs().startOf('day');
+                                        const parsedDate = dayjs(record.date).startOf('day'); 
+                                        const className = parsedDate.isSame(today, 'day') ? 'today-row' : '';
+                                        return className;
+                                    }
+                                    return '';
+                                }}
+                                className="my-table-styling2"
+                                scroll={{ y: 60 * 10, x: '100%' }}
+                                dataSource={dataSource || []}
+                                columns={columns}
+                                rowKey="_id"
+                                pagination={false}
+                            />
+                        </div>
+
                     </div>
                     <div className='flex gap-5 absolute bottom-0 rounded pb-1.5 px-2 bg-white w-[74vw]'>
                         <p className='flex gap-2 items-center text-sm'><TentTree size={16} color='blue' />Holiday</p>
