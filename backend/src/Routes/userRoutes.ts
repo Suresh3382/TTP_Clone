@@ -1,6 +1,6 @@
 import express from 'express';
 import { ChangePassword, Login, RefreshToken, Signup } from '../Controllers/AuthController';
-import { getAllUsers, getUser, getUserDetails, UpdatePfp, updateUser, UserDetails } from '../Controllers/UserController';
+import { getAllUsers, getAllUsersDetails, getUser, getUserDetails, UpdatePfp, updateUser, UserDetails } from '../Controllers/UserController';
 import { CheckAuth, CheckRefreshToken } from '../MiddleWares/AuthMiddleware';
 import { deleteLeaveRequest, editLeaveRequest, getAllLeaveRequests, getLeaveRequest, LeaveRequest } from '../Controllers/LeavesController';
 import { getReports, updateReports } from '../Controllers/ReportsController';
@@ -24,6 +24,7 @@ router.post('/deleteLeaveRequest/:leaveRequestId', CheckAuth, deleteLeaveRequest
 router.post('/getAllLeaveRequests', CheckAuth, getAllLeaveRequests);
 router.post('/getreports', CheckAuth, getReports);
 router.post('/updateUserReports', CheckAuth, updateReports);
+router.get('/getAllUserDetails', CheckAuth, getAllUsersDetails);
 
 //dummy
 router.get('/dummy', CheckAuth, (req: any, res: any) => {

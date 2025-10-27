@@ -13,7 +13,6 @@ import { EprofilePageEnum } from '../Component/Dashboard/DashboardComponents/Pro
 import Leaves, { IleaveRequest } from '../Component/Dashboard/DashboardComponents/Leaves/Leaves';
 import { leaveStatusEnum } from '../Component/Dashboard/DashboardComponents/Leaves/LeavesType/LTEnum/LeavesTypeEnum';
 import ProtectedRoute from './ProtectedRoutes';
-import { Home } from 'lucide-react';
 import AdminDashboard from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/AdminDashboard';
 import Profile from '../Component/Dashboard/DashboardComponents/Profile/Profile';
 import Request from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/Request';
@@ -25,6 +24,7 @@ import { useCallApi } from '../Utlits/AxiosConifg';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Component/Redux/Store';
 import Employees from '../Component/Dashboard/DashboardComponents/AdminDashboardComponents/Employess/Employees';
+import Home from '../Component/Dashboard/DashboardComponents/Home';
 
 export const defaultLeaveRequestValues = {
   _id: '',

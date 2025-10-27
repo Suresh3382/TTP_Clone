@@ -66,19 +66,28 @@ const Home = () => {
 
     useEffect(() => {
         const myChart = echarts.init(chartRef.current);
-        const sevenDays: any[] = [];
 
-        currentMonthReports?.attendances.forEach((attends) => {
-            const today = dayjs();
-            if (attends && attends.workingHours) {
-                if (today.diff(attends.date, 'date') >= 7) {
-                    sevenDays.push(attends);
-                }
-            }
-        });
+        // currentMonthReports?.attendances.forEach((attends) => {
+        //     const today = dayjs();
+        //     if (attends && attends.workingHours) {
+        //         console.log(dayjs(attends.date).format('DD MM YYYY'),"attends");
+        //         if (today.diff(attends.date, 'd') >= 7) {
+        //             sevenDays.push(attends);
+        //         }
+        //     }
+        // });
+
+        currentMonthReports?.attendances.map((da: any) => {
+            console.log(dayjs(da.date).format("DD MM YYYY"),da,"dadadad")
+        })
+
+        let sevenDays: any[] = [];
+        sevenDays = currentMonthReports?.attendances.slice(-7) || []
 
         const workingHoursData = sevenDays.map((day) => day.workingHours || 0);
         const shortHoursData = sevenDays.map((day) => day.shortHours || 0);
+
+        const data = sevenDays.map((day) => dayjs(day.date).format('D MMM'))
 
         const option = {
             tooltip: {
@@ -103,10 +112,10 @@ const Home = () => {
             },
             xAxis: {
                 type: 'category',
-                data: sevenDays.map((day) => dayjs(day.date).format('D MMM')),
+                data: data,
                 axisLabel: {
                     fontFamily: 'Outfit',
-                    fontSize: 14,
+                    fontSize: 11,
                 },
             },
             yAxis: {
@@ -557,7 +566,7 @@ const Home = () => {
                     <span>Attendences</span>
                     <span className='text-sm text-gray-600'>This Month</span>
                 </div>
-                <div className="flex flex-col overflow-y-scroll clean-scrollbar h-[81vh]">
+                <div className="flex flex-col overflow-y-scroll clean-scrollbar h-[83vh]">
                     {currentMonthReports && currentMonthReports.attendances.length > 0 ? (
                         currentMonthReports.attendances.map((att, index) => (
                             att.status !== EReportsStatus.WeekOff ? (

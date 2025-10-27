@@ -99,6 +99,10 @@ const Employees = () => {
     },
   ];
 
+  callApi({ requestEndpoint: `${baseURL}user/getAllUserDetails`, method: 'get' }).then((res) => {
+    console.log(res);
+  })
+
   return (
     <div>
       <div className="flex bg-white py-2.5 flex gap-2 justify-end items-center">

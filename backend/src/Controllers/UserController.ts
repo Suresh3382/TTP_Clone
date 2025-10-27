@@ -164,3 +164,15 @@ export const getAllUsers = async (req: any, res: Response) => {
         return res.status(500).json({ success: false, message: 'Server error' });
     }
 }
+
+export const getAllUsersDetails = async (req: any, res: Response) => {
+    try {
+        const response = await UsersFullDetailsModel.find();
+        if (response.length === 0) {
+            return res.status(404).json({ sucess: false, message: "No User found!" })
+        }
+        return res.status(200).json({ success: true, response });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: 'Server error' });
+    }
+}

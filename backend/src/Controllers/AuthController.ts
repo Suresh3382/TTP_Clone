@@ -4,8 +4,6 @@ import { UserModel } from "../Models/UserModel";
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from "../MiddleWares/AuthMiddleware";
 import { Onboadring } from "../Services/UserServices";
-import { log } from "console";
-
 const generateAccessToken = (id: string) => {
     return jwt.sign({ id }, process.env.ACCESS_SECRET!, { expiresIn: '5m' });
 };
