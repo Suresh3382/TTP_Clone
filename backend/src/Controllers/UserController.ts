@@ -126,12 +126,14 @@ export const getUser = async (req: any, res: Response) => {
 
 export const getAllUsers = async (req: any, res: Response) => {
     const _id = req?.user?._id;
-    const searchedUser = req.body;
+    const name = req.body.name;
     try {
+        const nameRegex = new RegExp(`^${name}$`, 'i')  
         const response = await UserModel.aggregate([
             {
                 $match: {
-                    _id: { $ne: _id }
+                    _id: { $ne: _id },
+                    'userDetails.contactFeilds.firstName': { $not: nameRegex }, 
                 }
             },
             {

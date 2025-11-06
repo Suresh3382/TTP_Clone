@@ -13,7 +13,7 @@ export const useCallApi = () => {
         body
     }: {
         requestEndpoint: string;
-        method: "get" | "post" | "put" | "delete"; // constrain methods
+        method: "get" | "post" | "put" | "delete";
         body?: any;
     }) => {
         try {
@@ -29,7 +29,6 @@ export const useCallApi = () => {
             }
         } catch (err: any) {
             console.error(err);
-
             if (err.response?.data?.authError) {
                 if (refreshToken) {
                     try {
@@ -48,7 +47,6 @@ export const useCallApi = () => {
                             return res;
                         } else {
                             localStorage.clear();
-                            // redirect to login if needed
                         }
                     } catch (refreshError) {
                         console.error("Refresh token failed", refreshError);
@@ -56,7 +54,6 @@ export const useCallApi = () => {
                     }
                 } else {
                     localStorage.clear();
-                    // redirect to login if needed
                 }
             }
 

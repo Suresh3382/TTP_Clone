@@ -14,7 +14,7 @@ interface IAuthResponseData {
         Onboadring: boolean;
         accessToken: string;
         refreshToken: string;
-        role: "ADMIN"| "USER";
+        role: "ADMIN" | "USER";
         user: string;
         _id: string;
     };
@@ -126,7 +126,7 @@ export const PanelStateSlice = createSlice({
 
 
 export const authLogin = createAsyncThunk<ILoginResponse, ILoginInterface>(
-    "auth/login",
+    "auth/Login",
     async (values: ILoginInterface, thunkAPI) => {
         try {
             const response = await axios.post(`${baseURL}user/Login`, values);

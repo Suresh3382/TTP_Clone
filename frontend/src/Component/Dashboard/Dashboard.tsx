@@ -81,7 +81,7 @@ const Dashboard = () => {
     const handleLogout = () => {
         localStorage.clear();
         sessionStorage.clear();
-        navigate('/login');
+        navigate('/Login');
     };
 
     const handleMenuClick = (e: { key: string }) => {

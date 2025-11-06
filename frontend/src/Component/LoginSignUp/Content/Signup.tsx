@@ -39,7 +39,7 @@ const Signup = () => {
             const response = await axios.post(`${baseURL}user/Signup`, finalSignupValues);
             if (response.data) {
                 alert('Signup Sucessfully');
-                navigate('/login');
+                navigate('/Login');
             }
         } catch (error) {
             console.log("Error :", error);
@@ -49,7 +49,7 @@ const Signup = () => {
     return (
         <div className="w-full min-h-screen flex">
             <div className="w-1/2 flex items-center justify-center bg-[#F3F4FA]">
-                <img src='src\Component\LoginSignUp\Images\ttplogin.svg' alt="Login" />
+                <img src='src\Component\LoginSignUp\Images\ttpLogin.svg' alt="Login" />
             </div>
             <div className="w-1/2 flex items-center justify-center">
                 <div className='w-1/3 h-full flex flex-col justify-center gap-10'>
@@ -85,7 +85,7 @@ const Signup = () => {
                                             {errors.confirmPassword && touched.confirmPassword ? <span className='text-red-600'>{errors.confirmPassword}</span> : null}
                                         </div>
                                     </div>
-                                    <p className='text-[#017AFF] cursor-pointer text-right my-6' onClick={() => navigate('/login')}>Login!</p>
+                                    <p className='text-[#017AFF] cursor-pointer text-right my-6' onClick={() => navigate('/Login')}>Login!</p>
                                     <div className='flex justify-center'>
                                         <button type='submit' className='w-1/3 text-white bg-blue-700 rounded-lg text-sm px-4 py-2'>Signup</button>
                                     </div>

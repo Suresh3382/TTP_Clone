@@ -14,7 +14,7 @@ const Login = () => {
     const { role } = useSelector((state: RootState) => state.authLogin);
     const dispatch = useDispatch<AppDispatch>();
 
-    const loginInitialValue = {
+    const LoginInitialValue = {
         email: '',
         username: '',
         password: ''
@@ -44,7 +44,7 @@ const Login = () => {
                         dispatch(setSelectedKey('/home'));
                     }
                 } else {
-                    navigate('/onboarding');    
+                    navigate('/onboarding');
                 }
             }
         }).catch((error) => {
@@ -109,7 +109,7 @@ const Login = () => {
     return (
         <div className="w-full min-h-screen flex">
             <div className="w-1/2 flex items-center justify-center bg-[#F3F4FA]">
-                <img src='src\Component\LoginSignUp\Images\ttplogin.svg' alt="Login" />
+                <img src='src\Component\LoginSignUp\Images\ttpLogin.svg' alt="Login" />
             </div>
             <div className="w-1/2 flex items-center justify-center">
                 <div className='w-1/3 h-full flex flex-col justify-center gap-8'>
@@ -118,7 +118,7 @@ const Login = () => {
                     <p className='text-xl text-[#223B95]'>Login into Your Account</p>
                     <div className='flex flex-col gap-5'>
                         <Formik
-                            initialValues={loginInitialValue}
+                            initialValues={LoginInitialValue}
                             validationSchema={schema}
                             onSubmit={handleSubmit}
                         >

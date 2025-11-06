@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { UserModel } from "../Models/UserModel";
 import jwt from 'jsonwebtoken';
 import { JwtPayload } from "../MiddleWares/AuthMiddleware";
-import { Onboadring } from "../Services/UserServices";
+
 const generateAccessToken = (id: string) => {
     return jwt.sign({ id }, process.env.ACCESS_SECRET!, { expiresIn: '5m' });
 };

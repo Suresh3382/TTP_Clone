@@ -99,7 +99,7 @@ const AppRoutes = () => {
         {/* <Route path='/' element={authorized ? onbordingComplete ? role === 'ADMIN' ? <ADMINDashboard /> : <USERDashboard /> : <Onboarding /> : <Login />} /> */}
         {/* <Route path="/onboarding" element={<Layout />} /> */}
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/Login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path='/example' element={<Test />} />
           <><Route

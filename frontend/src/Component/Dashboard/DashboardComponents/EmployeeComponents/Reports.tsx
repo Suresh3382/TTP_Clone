@@ -428,27 +428,31 @@ const Reports = () => {
                 <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
                     <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthPresence : '0'}</p>
 
-                    <p className='flex bg-green-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-green-500' size={12} />Presence</p>
+                    <p className='flex bg-green-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-green-500' size={12} />Presence</p>
                 </div>
                 <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
                     <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthAbsent : '0'}</p>
-                    <p className='flex bg-red-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-red-500' size={12} />Absent</p>
+                    <p className='flex bg-red-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-red-500' size={12} />Absent</p>
                 </div>
                 <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
                     <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthLeaveToken : '0'}</p>
-                    <p className='flex bg-purple-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-purple-500' size={12} />Leave Taken</p>
+                    <p className='flex bg-purple-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-purple-500' size={12} />Leave Taken</p>
                 </div>
                 <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
                     <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthOnTime : '0'}</p>
-                    <p className='flex bg-red-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-red-500' size={12} />On Time</p>
+                    <p className='flex bg-green-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-green-500' size={12} />On Time</p>
+                </div>
+                <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
+                    <p className='text-2xl'>{currentMonthReports ? currentMonthReports?.dayRecords?.totalMonthNotOnTime : '0'}</p>
+                    <p className='flex bg-red-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-red-500' size={12} />Not On Time</p>
                 </div>
                 <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
                     <p className='text-2xl'>{currentMonthReports ? convertDecimalToTimeDirectForMonth(currentMonthReports?.dayRecords?.totalMonthWokringHours) : '00:00'}</p>
-                    <p className='flex bg-blue-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-blue-500' size={12} />Working Hours</p>
+                    <p className='flex bg-blue-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-blue-500' size={12} />Working Hours</p>
                 </div>
                 <div className='bg-white flex flex-col gap-1 w-48 text-center py-3 rounded-lg'>
                     <p className='text-2xl'>{currentMonthReports ? convertDecimalToTimeDirectForMonth(currentMonthReports?.dayRecords?.totalMonthShortHours) : '00:00'}</p>
-                    <p className='flex bg-red-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-4 py-1 text-sm'><Circle className='text-red-500' size={12} />Short Hours</p>
+                    <p className='flex bg-red-50 rounded-lg mx-2 flex justify-center items-center gap-2 px-3 py-1 text-sm'><Circle className='text-red-500' size={12} />Short Hours</p>
                 </div>
             </div>
             <div className='mt-2'>

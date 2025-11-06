@@ -11,7 +11,7 @@ router.get('/full-details', CheckAuth, getUserDetails);
 router.get('/getAllUsers', CheckAuth, getAllUsers);
 router.post('/getLeaveRequest', CheckAuth, getLeaveRequest);
 router.post('/signup', Signup);
-router.post('/login', Login);
+router.post('/Login', Login);
 router.post('/refresh/:refreshToken', CheckRefreshToken, RefreshToken);
 router.get('/getUser', CheckAuth, getUser);
 router.post('/changePassword', CheckAuth, ChangePassword);

@@ -11,16 +11,24 @@ const Employees = () => {
   const [selected, setSelected] = useState<ESelected>(ESelected.Table);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [users, setUsers] = useState<IcurrentUserDetails[]>([]);
+  const [nameFilterEmployees, setNameFilterEmployees] = useState<string>();
   const { callApi } = useCallApi();
 
   useEffect(() => {
     getAllUser();
-  }, [refresh]);
+  }, [refresh, nameFilterEmployees]);
+
+  const handleSearch = (w: any) => {
+    if (w.key === "Enter") {
+      setNameFilterEmployees(w.target.value);
+    }
+  }
 
   const getAllUser = () => {
     callApi({
       requestEndpoint: `${baseURL}user/getAllUsers`,
       method: "get",
+      body: { name: nameFilterEmployees }
     }).then((res) => {
       setUsers(res.data.response || []);
     });
@@ -94,7 +102,7 @@ const Employees = () => {
       title: 'DESIGNATION',
       key: 'DESIGNATION',
       render: (_, record) => (
-        <span>Architect & Designing & Printing</span>
+        <span>Architect & DeLoging</span>
       ),
     },
   ];
@@ -106,7 +114,7 @@ const Employees = () => {
   return (
     <div>
       <div className="flex bg-white py-2.5 flex gap-2 justify-end items-center">
-        <Input suffix={<Search size={16} />} placeholder='Search Employee...' className='w-72' />
+        <Input suffix={<Search size={16} />} onKeyDown={handleSearch} onChange={(e: any) => { e.target.value === "" && setNameFilterEmployees('') }} placeholder='Search Employee...' className='w-72' />
         <Button className='themed-bt flex gap-1 py-1.5 font-[outfit]'><Plus size={16} /> Employee</Button>
         <button onClick={getAllUser} className='flex gap-1 items-center cursor-pointer py-1 px-2 rounded bg-blue-100 text-blue-500'>
           <Download size={18} /> CSV

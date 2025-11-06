@@ -78,7 +78,7 @@ const Home = () => {
         // });
 
         currentMonthReports?.attendances.map((da: any) => {
-            console.log(dayjs(da.date).format("DD MM YYYY"),da,"dadadad")
+            console.log(dayjs(da.date).format("DD MM YYYY"), da, "dadadad")
         })
 
         let sevenDays: any[] = [];
